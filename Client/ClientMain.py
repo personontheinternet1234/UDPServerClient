@@ -1,4 +1,4 @@
-from Client import ClientConnection
+from ClientConnection import ClientConnection
 
 if __name__ == "__main__":
     server_addr = "192.168.1.15"
