@@ -1,4 +1,4 @@
-from Server import ThreadedServer
+from ThreadedServer import ThreadedServer
 
 if __name__ == "__main__":
     server_addr = "192.168.1.15"
