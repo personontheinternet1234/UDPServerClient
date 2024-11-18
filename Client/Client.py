@@ -13,14 +13,14 @@ import sys
 from time import sleep
 
 
-class Connection:
+class ClientConnection:
 
-    def __init__(self, server_ip, client_ip, port):
-        self.server_ip = server_ip
+    def __init__(self, server_addr, client_addr, port):
+        self.server_addr = server_addr
         self.port = port
         self.client_socket = socket.socket(socket.AF_INET, socket.SOCK_DGRAM)
         self.client_socket.bind(('', self.port))
-        self.client_ip = client_ip
+        self.client_addr = client_addr
 
         self.server_response = False
         self.connected_to_server = False
@@ -38,7 +38,7 @@ class Connection:
             sleep(0.001)
 
             self.client_socket.sendto(("{\"server_check\": \"challenge\"}").encode("UTF-8"),
-                                      (self.server_ip, self.port))
+                                      (self.server_addr, self.port))
             self.server_response = False
             sleep(10)
             if self.server_response == False:
@@ -48,8 +48,8 @@ class Connection:
 
     def connect(self):
         try:
-            self.client_socket.sendto(("{\"connected\": \"" + self.client_ip + "\"}").encode("UTF-8"),
-                                      (self.server_ip, self.port))
+            self.client_socket.sendto(("{\"connected\": \"" + self.client_addr + "\"}").encode("UTF-8"),
+                                      (self.server_addr, self.port))
             print("[Client] Binded To Socket")
         except (ConnectionRefusedError, OSError) as e:
             print("[Client] Not Connected")
@@ -70,12 +70,12 @@ class Connection:
 
                 if (packet.get("client_check")):
                     self.client_socket.sendto(("{\"client_check\": \"received\"}").encode("UTF-8"),
-                                              (self.server_ip, self.port))
+                                              (self.server_addr, self.port))
                 if (packet.get("server_check")):
                     self.server_response = True
 
-                if (packet.get("motion")):
-                  print("lel")
+                if (packet.get("test")):
+                  print("test received")
 
             except Exception as e:
                 print(e)
@@ -83,7 +83,7 @@ class Connection:
 
 
 if __name__ == "__main__":
-    server_ip = "192.168.1.15"
-    client_ip = "192.168.1.7"
-    Client = Client(server_ip, client_ip, 5559)
+    server_addr = "192.168.1.15"
+    client_addr = "192.168.1.7"
+    Client = Client(server_addr, client_addr, 5559)
     Client.start_threads()
