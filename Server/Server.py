@@ -6,8 +6,8 @@ import json
 
 class ThreadedServer(object):
 
-    def __init__(self, host, port):
-        self.host = host
+    def __init__(self, server_addr, port):
+        self.server_addr = host
         self.port = port
         self.server_socket = socket.socket(socket.AF_INET, socket.SOCK_DGRAM)
         self.server_socket.setsockopt(socket.SOL_SOCKET, socket.SO_REUSEADDR, 1)
@@ -54,8 +54,8 @@ class ThreadedServer(object):
                         if received_packet.get("server_check"):
                             self.server_socket.sendto("{\"server_check\": \"received\"}".encode("UTF-8"), (client_ip, self.port))
 
-                        if received_packet.get("gps"):
-                            print(str(address[0]) + ": " + str(received_packet["gps"]["lat"]) + " " + str(received_packet["gps"]["lon"]))
+                        if received_packet.get("test"):
+                            print("test received")
 
                     except Exception as e:
                         print("str(e)")
