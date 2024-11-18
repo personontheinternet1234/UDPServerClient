@@ -1,8 +1,7 @@
 from Server import ThreadedServer
 
 if __name__ == "__main__":
-    host_addr = "192.168.1.15"
-    client_addr = "192.168.1.7"
+    server_addr = "192.168.1.15"
     port = 5559
 
-    groundControlServer = ThreadedServer(host_addr, port)
+    groundControlServer = ThreadedServer(server_addr, port)
